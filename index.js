@@ -28,7 +28,7 @@ const consumer = async () => {
         console.log(" [x] Recibido '%s'", data);
         const body = JSON.stringify({
           idPay: data.idPay,
-          product: data.product,
+          product: data.product, 
           date: data.date,
           price: data.price,
         });
