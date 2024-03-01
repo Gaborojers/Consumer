@@ -1,16 +1,16 @@
 const amqp = require("amqplib");
 
-const exchangeName = process.env.AMQP_EXCH || "";
-const routingKey = process.env.AMQP_ROUTINGKEY || "";
+const exchangeName = process.env.AMQP_EXCH || "upchiapas.int";
+const routingKey = process.env.AMQP_ROUTINGKEY || "esp32";
 const options = {
-  username: 'Gaboneil',
-  password: 'LGSC06042004',
+  username: process.env.AMQP_USERNAME || "Gaboneil",
+  password: process.env.AMQP_PASSWORD || "LGSC06042004",
 };
 const queue = "initial";
 
 const consumer = async () => {
   const conn = await amqp.connect(
-    "amqp://52.21.114.121",
+    process.env.AMQP_URL || "amqp://52.21.114.121",
     options
   );
   const ch = await conn.createChannel();
@@ -33,7 +33,7 @@ const consumer = async () => {
           price: data.price,
         });
         console.log(body);
-        await fetch("http://localhost:3001/payment/", {
+        await fetch("https://api-hexagonal2-223227.onrender.com/payment/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
